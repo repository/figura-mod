@@ -5,13 +5,15 @@ on:
     types: [opened, reopened, synchronize]
 
 jobs:
-  check-tranlsation-diff:
+  prevent-translation-changes:
     if: github.actor != 'github-actions[bot]' && !contains(github.event.pull_request.title, 'Update Translations')
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Check For Translation Changes
         run: |
